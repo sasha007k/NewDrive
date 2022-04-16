@@ -1,4 +1,4 @@
-﻿  using BLL.Models;
+﻿using BLL.Models;
 using BLL.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -52,8 +52,13 @@ namespace NewDrive.Controllers
 
         public async Task<IActionResult> DeleteFile(int id)
         {
+            var file = await _fileService.GetAsync(id);
+            if (file != null)
+            {
+                System.IO.File.Delete(file.Path);
+            }
             await _fileService.DeleteFile(id);
-            return NoContent();
+            return RedirectToAction("Index", "Home");
         }
 
         public async Task<IActionResult> UpdateFile(IFormFile file, string path)

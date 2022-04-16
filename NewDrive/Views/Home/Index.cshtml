@@ -156,11 +156,11 @@
                             <br />
                             <a asp-controller="File" asp-action="DownloadFile" asp-route-path="@file.Path" class="link-primary">Download</a>
                             <br />
-                            <form id="editFileForm" method="post" asp-controller="File" asp-action="UpdateFile" enctype="multipart/form-data"
+                            @*<form id="editFileForm" method="post" asp-controller="File" asp-action="UpdateFile" enctype="multipart/form-data"
                                   asp-route-path="@file.Path">
                                 <label for="editFile">Edit File</label>
                                 <input type="file" class="form-control" name="file" id="editFile" />
-                            </form>
+                            </form>*@
                             <a asp-controller="File" asp-action="DeleteFile" asp-route-id="@file.Id" class="link-danger">Delete</a>
                         </div>
                     </div>

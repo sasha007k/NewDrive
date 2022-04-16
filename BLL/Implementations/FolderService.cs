@@ -33,7 +33,7 @@ namespace BLL.Implementations
             {
                 Name = name,
                 ParentFolderId = currentFolderId,
-                Path ="",
+                Path = string.Empty,
                 OwnerId = userId
             };
 
@@ -52,12 +52,21 @@ namespace BLL.Implementations
 
         public async Task DeleteFolder(int id)
         {
-            var dir = _folderRepository.GetAll().Where(x => x.Id == id).FirstOrDefault();
-            Directory.Delete(dir.Path);
+            var dir = _folderRepository.GetAll(x => x.Files, x => x.Folders).Where(x => x.Id == id).FirstOrDefault();
+            if (dir == null) return;
 
-            foreach (var item in dir.Files)
+            foreach (var folder in dir.Folders)
             {
-                await _fileRepository.Delete(item.Id);
+                foreach (var file in folder.Files)
+                {
+                    await _fileRepository.Delete(file.Id);
+                }
+                await _folderRepository.Delete(folder.Id);
+            }
+
+            foreach (var file in dir.Files)
+            {
+                await _fileRepository.Delete(file.Id);
             }
 
             await _folderRepository.Delete(dir.Id);

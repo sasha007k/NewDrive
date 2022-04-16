@@ -17,5 +17,7 @@ namespace BLL.Services
         Task UpdateFile(IFormFile file, string path);
 
         Task DeleteFile(int id);
+
+        Task<DAL.Models.File> GetAsync(int id);
     }
 }

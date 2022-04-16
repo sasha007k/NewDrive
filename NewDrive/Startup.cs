@@ -40,7 +40,8 @@ namespace NewDrive
                 options.Password.RequireDigit = false;
             }).AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultUI();
-            services.AddControllersWithViews();
+            services.AddControllersWithViews()
+                    .AddRazorRuntimeCompilation();
 
             services.AddSingleton<IBackgroundQueue<Notification>, BackgroundQueue<Notification>>();
 

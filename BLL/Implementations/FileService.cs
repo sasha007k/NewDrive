@@ -83,5 +83,10 @@ namespace BLL.Implementations
                 await file.CopyToAsync(fileStream);
             }
         }
+
+        public async Task<DAL.Models.File> GetAsync(int id)
+        {
+            return await _fileRepository.GetById(id);
+        }
     }
 }
