@@ -5,8 +5,8 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
+using System.Diagnostics.CodeAnalysis;
 
 namespace BLL.Implementations
 {
@@ -60,6 +60,7 @@ namespace BLL.Implementations
             return _fileRepository.GetAll().Where(x => x.FolderId == currentFolderId).ToList();
         }
 
+        [ExcludeFromCodeCoverage]
         public async Task<(byte[], string)> GetFile(string path)
         {
             var file =  _fileRepository.GetAll().Where(x => x.Path == path).FirstOrDefault();
@@ -74,6 +75,7 @@ namespace BLL.Implementations
           await  _fileRepository.Delete(id);
         }
 
+        [ExcludeFromCodeCoverage]
         public async Task UpdateFile(IFormFile file, string path)
         {
             File.Delete(path);

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
 namespace NewDrive.Controllers
@@ -31,8 +32,7 @@ namespace NewDrive.Controllers
             {
                 var userId = _userManager.GetUserId(User);
                 await _fileService.SaveFile(file, currentFolderId, userId);
-                var notification = new Notification { Message = $"NO WORRIES. {file.Name} is uploading." };
-                _queue.Enqueue(notification);
+
                 return RedirectToAction("Index", "Home");
             }
             catch(Exception e)
@@ -50,6 +50,7 @@ namespace NewDrive.Controllers
             return File(res.Result.Item1, "application/octet-stream", res.Result.Item2);
         }
 
+        [ExcludeFromCodeCoverage]
         public async Task<IActionResult> DeleteFile(int id)
         {
             var file = await _fileService.GetAsync(id);

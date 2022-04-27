@@ -55,18 +55,24 @@ namespace BLL.Implementations
             var dir = _folderRepository.GetAll(x => x.Files, x => x.Folders).Where(x => x.Id == id).FirstOrDefault();
             if (dir == null) return;
 
-            foreach (var folder in dir.Folders)
+            if (dir.Folders != null)
             {
-                foreach (var file in folder.Files)
+                foreach (var folder in dir.Folders)
+                {
+                    foreach (var file in folder.Files)
+                    {
+                        await _fileRepository.Delete(file.Id);
+                    }
+                    await _folderRepository.Delete(folder.Id);
+                }
+            }
+
+            if (dir.Files != null)
+            {
+                foreach (var file in dir.Files)
                 {
                     await _fileRepository.Delete(file.Id);
                 }
-                await _folderRepository.Delete(folder.Id);
-            }
-
-            foreach (var file in dir.Files)
-            {
-                await _fileRepository.Delete(file.Id);
             }
 
             await _folderRepository.Delete(dir.Id);
