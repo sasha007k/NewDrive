@@ -28,5 +28,11 @@ namespace NewDrive.Controllers
             await _folderService.DeleteFolder(id);
             return RedirectToAction("Index", "Home");
         }
+
+        public async Task<IActionResult> RestoreFolder(int id)
+        {
+            await _folderService.RestoreFolder(id);
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

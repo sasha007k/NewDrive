@@ -72,7 +72,7 @@ namespace BLL.Implementations
 
         public async Task DeleteFile(int id)
         {
-          await  _fileRepository.Delete(id);
+            await _fileRepository.Delete(id);
         }
 
         [ExcludeFromCodeCoverage]
@@ -89,6 +89,11 @@ namespace BLL.Implementations
         public async Task<DAL.Models.File> GetAsync(int id)
         {
             return await _fileRepository.GetById(id);
+        }
+
+        public async Task RestoreFile(int id)
+        {
+            await _fileRepository.RestoreFile(id);
         }
     }
 }

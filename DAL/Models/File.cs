@@ -16,5 +16,7 @@ namespace DAL.Models
         public string OwnerId { get; set; }
 
         public Permission Permission { get; set; }
+
+        public bool IsDeleted { get; set; }
     }
 }

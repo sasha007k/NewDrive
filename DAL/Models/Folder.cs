@@ -19,5 +19,7 @@ namespace DAL.Models
         public List<File> Files { get; set; }
 
         public List<Folder> Folders { get; set; }
+
+        public bool IsDeleted { get; set; }
     }
 }

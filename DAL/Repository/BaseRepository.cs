@@ -10,7 +10,7 @@ namespace DAL.Repository
         where TEntity : class
         where TContext : DbContext
     {
-        private readonly TContext _context;
+        protected readonly TContext _context;
 
         public BaseRepository(TContext context)
         {

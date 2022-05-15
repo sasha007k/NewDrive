@@ -53,19 +53,26 @@ namespace NewDrive.Controllers
         [ExcludeFromCodeCoverage]
         public async Task<IActionResult> DeleteFile(int id)
         {
-            var file = await _fileService.GetAsync(id);
-            if (file != null)
-            {
-                System.IO.File.Delete(file.Path);
-            }
+            //var file = await _fileService.GetAsync(id);
+            //if (file != null)
+            //{
+            //    System.IO.File.Delete(file.Path);
+            //}
             await _fileService.DeleteFile(id);
             return RedirectToAction("Index", "Home");
-        }
+        }      
 
         public async Task<IActionResult> UpdateFile(IFormFile file, string path)
         {
             await _fileService.UpdateFile(file, path);
             return NoContent();
+        }
+
+        [ExcludeFromCodeCoverage]
+        public async Task<IActionResult> RestoreFile(int id)
+        {
+            await _fileService.RestoreFile(id);
+            return RedirectToAction("Index", "Home");
         }
     }
 }

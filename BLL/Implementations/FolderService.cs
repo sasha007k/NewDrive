@@ -77,5 +77,33 @@ namespace BLL.Implementations
 
             await _folderRepository.Delete(dir.Id);
         }
+
+        public async Task RestoreFolder(int id)
+        {
+            var dir = _folderRepository.GetAll(x => x.Files, x => x.Folders).Where(x => x.Id == id).FirstOrDefault();
+            if (dir == null) return;
+
+            if (dir.Folders != null)
+            {
+                foreach (var folder in dir.Folders)
+                {
+                    foreach (var file in folder.Files)
+                    {
+                        await _fileRepository.RestoreFile(file.Id);
+                    }
+                    await _folderRepository.RestoreFile(folder.Id);
+                }
+            }
+
+            if (dir.Files != null)
+            {
+                foreach (var file in dir.Files)
+                {
+                    await _fileRepository.RestoreFile(file.Id);
+                }
+            }
+
+            await _folderRepository.RestoreFile(dir.Id);
+        }
     }
 }

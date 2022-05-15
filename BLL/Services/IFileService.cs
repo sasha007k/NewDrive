@@ -19,5 +19,7 @@ namespace BLL.Services
         Task DeleteFile(int id);
 
         Task<DAL.Models.File> GetAsync(int id);
+
+        Task RestoreFile(int id);
     }
 }

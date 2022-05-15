@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NewDrive.DTO;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace NewDrive.Controllers
@@ -35,8 +36,8 @@ namespace NewDrive.Controllers
                     filesFoldersModel.CurrentFolderId = baseFolder.Id;
                     filesFoldersModel.ParentFolderId = -1;
 
-                    filesFoldersModel.FilesInFolder = _fileService.GetAllFilesInCurrentFolder(baseFolder.Id);
-                    filesFoldersModel.FoldersInFolder = _folderService.GetAllFoldersInCurrentFolder(baseFolder.Id);
+                    filesFoldersModel.FilesInFolder = _fileService.GetAllFilesInCurrentFolder(baseFolder.Id).Where(x => !x.IsDeleted).ToList();
+                    filesFoldersModel.FoldersInFolder = _folderService.GetAllFoldersInCurrentFolder(baseFolder.Id).Where(x => !x.IsDeleted).ToList();
                 }
             }
 
@@ -46,6 +47,28 @@ namespace NewDrive.Controllers
         public IActionResult Privacy()
         {
             return View();
+        }
+
+        public IActionResult RecycleBin()
+        {
+            var filesFoldersModel = new FolderFilesModel();
+
+            var userId = _userManager.GetUserId(User);
+
+            if (userId != null)
+            {
+                var baseFolder = _folderService.GetBaseFolderByUserId(userId);
+                if (baseFolder != null)
+                {
+                    filesFoldersModel.CurrentFolderId = baseFolder.Id;
+                    filesFoldersModel.ParentFolderId = -1;
+
+                    filesFoldersModel.FilesInFolder = _fileService.GetAllFilesInCurrentFolder(baseFolder.Id).Where(x => x.IsDeleted).ToList();
+                    filesFoldersModel.FoldersInFolder = _folderService.GetAllFoldersInCurrentFolder(baseFolder.Id).Where(x => x.IsDeleted).ToList();
+                }
+            }
+
+            return View(filesFoldersModel);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
