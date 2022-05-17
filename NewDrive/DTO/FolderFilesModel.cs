@@ -12,5 +12,7 @@ namespace NewDrive.DTO
         public List<File> FilesInFolder { get; set; }
 
         public List<Folder> FoldersInFolder { get; set; }
+
+        public string Search { get; set; }
     }
 }

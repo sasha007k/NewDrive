@@ -14,7 +14,13 @@
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createFolder">
             Create Folder
         </button>
-        <br/>
+        &nbsp; &nbsp;
+
+        <div style="display:flex; flex-direction: row; justify-content: flex-start; align-items: flex-end">
+                       @*<label>Installer Number &nbsp;</label>*@
+                       <input id="search" class="form-control" style="max-width:150px" value=@Model.Search type="text" tabindex="1" />&ensp;
+                       <button id="btnSearch" class="btn btn-info" onclick="search()" tabindex="1"><i class="fa fa-search"></i> Search </button>
+        </div>
     </div>
 
 
@@ -186,6 +192,18 @@
     function createFolder() {
         var name = document.getElementById('folderName');
         $.post("@Url.Action("CreateFolder","Folder")", { folderName: name.value, currentFolderId: @Model.CurrentFolderId});
+    }
+
+
+    function search() {   
+
+       var requestUrl = window.origin + "/Home/Index";
+
+       requestUrl += "?search=" + $("#search").val();
+
+       window.location.replace(requestUrl);
+
+       this.initializeThirdPage();
     }
 
 

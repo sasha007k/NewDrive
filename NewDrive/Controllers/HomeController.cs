@@ -22,24 +22,41 @@ namespace NewDrive.Controllers
             _fileService = fileService;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string? search)
         {
+            var k = search;
             var filesFoldersModel = new FolderFilesModel();
 
             var userId = _userManager.GetUserId(User);
 
-            if (userId != null)
+            if (string.IsNullOrEmpty(search))
             {
+                if (userId != null)
+                {
+                    var baseFolder = _folderService.GetBaseFolderByUserId(userId);
+                    if (baseFolder != null)
+                    {
+                        filesFoldersModel.CurrentFolderId = baseFolder.Id;
+                        filesFoldersModel.ParentFolderId = -1;
+
+                        filesFoldersModel.FilesInFolder = _fileService.GetAllFilesInCurrentFolder(baseFolder.Id).Where(x => !x.IsDeleted).ToList();
+                        filesFoldersModel.FoldersInFolder = _folderService.GetAllFoldersInCurrentFolder(baseFolder.Id).Where(x => !x.IsDeleted).ToList();
+                    }
+                }
+            }
+            else
+            {
+                filesFoldersModel.Search = search;
                 var baseFolder = _folderService.GetBaseFolderByUserId(userId);
                 if (baseFolder != null)
                 {
                     filesFoldersModel.CurrentFolderId = baseFolder.Id;
                     filesFoldersModel.ParentFolderId = -1;
 
-                    filesFoldersModel.FilesInFolder = _fileService.GetAllFilesInCurrentFolder(baseFolder.Id).Where(x => !x.IsDeleted).ToList();
-                    filesFoldersModel.FoldersInFolder = _folderService.GetAllFoldersInCurrentFolder(baseFolder.Id).Where(x => !x.IsDeleted).ToList();
+                    filesFoldersModel.FilesInFolder = _fileService.GetAllFiles().Where(x => x.Name.Contains(search, System.StringComparison.OrdinalIgnoreCase)).ToList();
                 }
             }
+
 
             return View(filesFoldersModel);
         }
