@@ -4,19 +4,16 @@
 }
 @if (User.Identity.IsAuthenticated && Model != null)
 {
-
-
-
-
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createFile">
-        Create File
-    </button>
-
-
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createFolder">
-        Create Folder
-    </button>
-
+    <div class="row m-3">  
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createFile">
+            Create File
+        </button>
+        &nbsp;        
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createFolder">
+            Create Folder
+        </button>
+        <br/>
+    </div>
 
     <div class="modal fade" id="createFile" tabindex="-1" role="dialog" aria-labelledby="createFileLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
