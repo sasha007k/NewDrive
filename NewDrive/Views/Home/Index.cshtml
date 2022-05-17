@@ -7,20 +7,23 @@
 
 @if (User.Identity.IsAuthenticated && Model != null)
 {
+    <div class="row m-3">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createFile">
+            Create File
+        </button>
+        &nbsp;
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createFolder">
+            Create Folder
+        </button>
+        &nbsp; &nbsp;
 
-    <div class="progress">
-      <div class="progress-bar" role="progressbar" 
-      style="width: @progress%;" aria-valuenow="@progress" aria-valuemin="0" aria-valuemax="100">@progress%</div>
+        <div style="display:flex; flex-direction: row; justify-content: flex-start; align-items: flex-end">
+                       @*<label>Installer Number &nbsp;</label>*@
+                       <input id="search" class="form-control" style="max-width:150px" value=@Model.Search type="text" tabindex="1" />&ensp;
+                       <button id="btnSearch" class="btn btn-info" onclick="search()" tabindex="1"><i class="fa fa-search"></i> Search </button>
+        </div>
     </div>
 
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createFile">
-        Create File
-    </button>
-
-
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createFolder">
-        Create Folder
-    </button> 
 
     <div class="modal fade" id="createFile" tabindex="-1" role="dialog" aria-labelledby="createFileLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -144,7 +147,7 @@
             }
 
         }
-
+   
         @if (Model.FilesInFolder != null)
         {
             @foreach (var file in Model.FilesInFolder)
@@ -190,6 +193,21 @@
         var name = document.getElementById('folderName');
         $.post("@Url.Action("CreateFolder","Folder")", { folderName: name.value, currentFolderId: @Model.CurrentFolderId});
     }
+
+
+    function search() {   
+
+       var requestUrl = window.origin + "/Home/Index";
+
+       requestUrl += "?search=" + $("#search").val();
+
+       window.location.replace(requestUrl);
+
+       this.initializeThirdPage();
+    }
+
+
+
 </script>
 
 <style>

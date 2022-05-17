@@ -60,6 +60,11 @@ namespace BLL.Implementations
             return _fileRepository.GetAll().Where(x => x.FolderId == currentFolderId).ToList();
         }
 
+        public List<DAL.Models.File> GetAllFiles()
+        {
+            return _fileRepository.GetAll().ToList();
+        }
+
         [ExcludeFromCodeCoverage]
         public async Task<(byte[], string)> GetFile(string path)
         {

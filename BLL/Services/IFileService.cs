@@ -12,6 +12,8 @@ namespace BLL.Services
 
         List<DAL.Models.File> GetAllFilesInCurrentFolder(int currentFolderId);
 
+        List<DAL.Models.File> GetAllFiles();
+
         Task<(byte[], string)> GetFile(string path);
 
         Task UpdateFile(IFormFile file, string path);

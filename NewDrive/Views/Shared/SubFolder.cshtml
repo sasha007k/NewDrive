@@ -4,19 +4,22 @@
 }
 @if (User.Identity.IsAuthenticated && Model != null)
 {
+    <div class="row m-3">  
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createFile">
+            Create File
+        </button>
+        &nbsp;        
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createFolder">
+            Create Folder
+        </button>      
+        &nbsp; &nbsp;
 
-
-
-
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createFile">
-        Create File
-    </button>
-
-
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createFolder">
-        Create Folder
-    </button>
-
+        <div style="display:flex; flex-direction: row; justify-content: flex-start; align-items: flex-end">
+                       @*<label>Installer Number &nbsp;</label>*@
+                       <input id="search" class="form-control" style="max-width:150px" value=@Model.Search type="text" tabindex="1" />&ensp;
+                       <button id="btnSearch" class="btn btn-info" onclick="search()" tabindex="1"><i class="fa fa-search"></i> Search </button>
+        </div>
+    </div>
 
     <div class="modal fade" id="createFile" tabindex="-1" role="dialog" aria-labelledby="createFileLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -155,6 +158,16 @@
          $.post("@Url.Action("CreateFolder","Folder")", { folderName: name.value, currentFolderId: @Model.CurrentFolderId});
     }
 
+    function search() {   
+
+       var requestUrl = window.origin + "/Home/Index";
+
+       requestUrl += "?search=" + $("#search").val();
+
+       window.location.replace(requestUrl);
+
+       this.initializeThirdPage();
+    }
 
 
 </script>
