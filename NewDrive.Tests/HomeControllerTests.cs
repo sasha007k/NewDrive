@@ -58,7 +58,7 @@ namespace NewDrive.Tests
 
             _folderService.GetBaseFolderByUserId("1").Returns(new Folder() { Id = 1, Name = "file1", OwnerId = "1", ParentFolderId = -1 });
 
-            var response = _controller.Index();
+            var response = _controller.Index("");
 
             Assert.IsNotNull(response);
             Assert.IsInstanceOf<ViewResult>(response);

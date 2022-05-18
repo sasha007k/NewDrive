@@ -19,9 +19,17 @@ namespace DAL.Repository
 
         public async Task<TEntity> Add(TEntity entity)
         {
-            _context.Set<TEntity>().Add(entity);
-            await _context.SaveChangesAsync();
-            return entity;
+            try
+            {
+                _context.Set<TEntity>().Add(entity);
+                await _context.SaveChangesAsync();
+                return entity;
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
+            
         }
 
         public async Task<TEntity> Delete<TId>(TId id)
