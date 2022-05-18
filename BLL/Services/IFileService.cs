@@ -14,6 +14,8 @@ namespace BLL.Services
 
         List<DAL.Models.File> GetAllFiles();
 
+        public List<DAL.Models.File> GetStared();
+
         Task<(byte[], string)> GetFile(string path);
 
         Task UpdateFile(IFormFile file, string path);
@@ -23,5 +25,8 @@ namespace BLL.Services
         Task<DAL.Models.File> GetAsync(int id);
 
         Task RestoreFile(int id);
+
+        public Task<DAL.Models.File> StarFile(int id);
+
     }
 }

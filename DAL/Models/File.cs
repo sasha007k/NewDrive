@@ -12,6 +12,8 @@ namespace DAL.Models
 
         public int FolderId { get; set; }
 
+        public bool Stared { get; set; }
+
         public IdentityUser Owner { get; set; }
         public string OwnerId { get; set; }
 

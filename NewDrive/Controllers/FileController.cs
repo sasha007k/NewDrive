@@ -26,23 +26,22 @@ namespace NewDrive.Controllers
             _queue = queue;
         }
 
+        public async Task<IActionResult> StarFile(int id)
+        {
+            var file = await _fileService.StarFile(id);
+            return NoContent();
+        }
+
         [DisableRequestSizeLimit,
         RequestFormLimits(MultipartBodyLengthLimit = int.MaxValue,
        ValueLengthLimit = int.MaxValue)]
         public async Task<IActionResult> UploadFile(IFormFile file, int currentFolderId)
         {
-            try
-            {
-                var userId = _userManager.GetUserId(User);
-                await _fileService.SaveFile(file, currentFolderId, userId);
+            
+            var userId = _userManager.GetUserId(User);
+            await _fileService.SaveFile(file, currentFolderId, userId);
 
-                return RedirectToAction("Index", "Home");
-            }
-            catch(Exception e)
-            {
-                _logger.LogError(e.Message);
-                throw e;
-            }
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]

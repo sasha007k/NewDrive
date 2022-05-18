@@ -44,7 +44,8 @@ namespace BLL.Implementations
                 Name = file.FileName,
                 FolderId = currentFolderId,
                 OwnerId = userId,
-                Path = fullPath
+                Path = fullPath,
+                Stared = false
             };
 
             await _fileRepository.Add(newFile);
@@ -99,6 +100,23 @@ namespace BLL.Implementations
         public async Task RestoreFile(int id)
         {
             await _fileRepository.RestoreFile(id);
+        }
+
+        public List<DAL.Models.File> GetStared()
+        {
+            return _fileRepository.GetAll()
+                .Where(x => x.Stared == true).ToList();
+        }
+
+        public async Task<DAL.Models.File> StarFile(int id)
+        {
+            var file = await _fileRepository.GetById(id);
+
+            file.Stared = !file.Stared;
+
+            await _fileRepository.Update(file);
+
+            return file;
         }
     }
 }
