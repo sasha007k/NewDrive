@@ -3,7 +3,9 @@ using DAL.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NewDrive.DTO;
+using System;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -57,8 +59,33 @@ namespace NewDrive.Controllers
                 }
             }
 
-
+            CountFullFil(filesFoldersModel);
             return View(filesFoldersModel);
+        }
+
+        private void CountFullFil(FolderFilesModel folderFilesModel, int availableMemoryInGb = 20)
+        {
+            var storagePath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "Storage");
+            var storageSize = ConvertBytesToGigabytes(DirSize(new DirectoryInfo(storagePath)));
+            folderFilesModel.FullfilPersentage =   Math.Ceiling((storageSize * 100) / availableMemoryInGb);
+            folderFilesModel.FullfilMessage = $"Used memory: {Math.Round(storageSize, 3)} GB of {availableMemoryInGb} GB";
+        }
+
+        private double ConvertBytesToGigabytes(long bytes)
+        {
+            return ((bytes / 1024f) / 1024f) / 1024;
+        }
+
+        private long DirSize(DirectoryInfo d)
+        {
+            long size = 0;
+            FileInfo[] fis = d.GetFiles();
+            foreach (FileInfo fi in fis)
+            {
+                size += fi.Length;
+            }
+
+            return size;
         }
 
         public IActionResult Privacy()

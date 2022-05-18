@@ -14,5 +14,8 @@ namespace NewDrive.DTO
         public List<Folder> FoldersInFolder { get; set; }
 
         public string Search { get; set; }
+
+        public double FullfilPersentage { get; set; }
+        public string FullfilMessage { get; set; }
     }
 }

@@ -26,6 +26,9 @@ namespace NewDrive.Controllers
             _queue = queue;
         }
 
+        [DisableRequestSizeLimit,
+        RequestFormLimits(MultipartBodyLengthLimit = int.MaxValue,
+       ValueLengthLimit = int.MaxValue)]
         public async Task<IActionResult> UploadFile(IFormFile file, int currentFolderId)
         {
             try
