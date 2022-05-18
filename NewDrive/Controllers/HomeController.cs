@@ -93,6 +93,15 @@ namespace NewDrive.Controllers
             return View();
         }
 
+        public IActionResult Stared()
+        {
+            var filesFoldersModel = new FolderFilesModel();
+
+            filesFoldersModel.FilesInFolder =  _fileService.GetStared();
+
+            return View(filesFoldersModel);
+        }
+
         public IActionResult RecycleBin()
         {
             var filesFoldersModel = new FolderFilesModel();

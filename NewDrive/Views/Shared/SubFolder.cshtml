@@ -134,6 +134,14 @@
                             <br />
                             <br />
                             <a asp-controller="File" asp-action="DeleteFile" asp-route-id="@file.Id" class="link-danger">Delete</a>
+                             @if (file.Stared)
+                            {   
+                                <span onclick="star(@file.Id)" style="font-size:200%;color:green; position:absolute; bottom:0;right:0; padding-right: 15px; padding bottom: 10px;">&bigstar;</span>
+                            }
+                            else
+                            {
+                                <span onclick="star(@file.Id)" style="font-size:200%;color:black; position:absolute; bottom:0;right:0; padding-right: 15px; padding bottom: 10px;">&bigstar;</span>
+                            }
                         </div>
                     </div>
                 </div>
@@ -169,6 +177,18 @@
        this.initializeThirdPage();
     }
 
+
+</script>
+
+<script>
+
+    function star(id) {
+         $.post("@Url.Action("StarFile","File")", { id })
+         .then(setTimeout(function(){
+             window.location.reload();
+         }, 6));
+            return false;
+    }
 
 </script>
 

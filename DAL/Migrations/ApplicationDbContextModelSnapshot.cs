@@ -44,6 +44,9 @@ namespace DAL.Migrations
                     b.Property<int?>("PermissionId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("Stared")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.HasIndex("FolderId");
