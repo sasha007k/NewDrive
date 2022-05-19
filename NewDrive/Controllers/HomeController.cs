@@ -59,7 +59,8 @@ namespace NewDrive.Controllers
                 }
             }
 
-            CountFullFil(filesFoldersModel);
+            if (userId != null)
+                CountFullFil(filesFoldersModel);
             return View(filesFoldersModel);
         }
 
