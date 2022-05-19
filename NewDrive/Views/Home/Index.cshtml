@@ -187,7 +187,9 @@
 
     </div>
 
-    <div>
+    @if(User.Identity.IsAuthenticated)
+    {
+      <div>
         <div class="progress row m-3" style="height: 7px;" title="@Model.FullfilMessage">
           <div class="progress-bar bg-info" role="progressbar" 
                style="width: @Model.FullfilPersentage%;" aria-valuenow="@Model.FullfilPersentage" aria-valuemin="0" aria-valuemax="100">
@@ -195,6 +197,8 @@
         </div>
         <div style="text-align:center">@Model.FullfilMessage </div> 
     </div>    
+    }
+
 
 </div>
 
